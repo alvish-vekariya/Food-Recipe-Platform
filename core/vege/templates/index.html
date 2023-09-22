@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block body %}
+<p>{{request.user}}</p>
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-5 shadow" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3 class="text-center">Add Recipe</h3>
+        <hr><br>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Recipe Name:</label>
+          <input type="text" class="form-control" required name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="desc" class="form-label">Recipe Description:</label>
+          <textarea name="desc" id="desc" class="form-control" required cols="30" rows="5"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Recipe Image:</label>
+            <input type="file" class="form-control" id="image" name="image" aria-describedby="emailHelp">
+          </div>
+        <button type="submit" class="btn btn-primary">Add Recipe</button>
+      </form>
+      <hr>
+      <!-- {{receipes}} -->
+      <br>
+      <form action="">
+        <div class="mt-5">
+          <div class="mx-auto col-6">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Search Recipe</label>
+              <input type="text" class="form-control" name="search" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </form>
+      
+      <table class="table table-bordered mt-5">
+        <thead >
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Recipe Description</th>
+            <th scope="col">Recipe Image</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in receipes %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{i.name}}</td>
+            <td>{{i.desc}}</td>
+            <td><img src="/media/{{i.image}}" alt="" style="height: 100px; width:200px;"></td>
+            <td><a href="/delete/{{i.id}}" class="btn btn-danger">Delete</a>
+                <a href="/update/{{i.id}}" class="my-2 btn btn-success">Update</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}
